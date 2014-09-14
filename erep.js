@@ -32,7 +32,7 @@
                 //eat_food_wide energy - use energy bar
             },
             classes: {
-                energy_class: 'warn_on',
+                energy_class: 'warn_on'
             }
         };
         var _selectors = _that.settings.selectors,
@@ -69,10 +69,17 @@
                 }
             },
             recover_health: function () {
-
+              var h_check =  _that.main.check_recover_health(),
+                  energy_recover = $(_selectors.energy_btn_id);
+                if(h_check== true){
+                    energy_recover.click();
+                }
             },
             fight: function () {
 
+            },
+            go_home: function(){
+                _selectors.home_link.click();
             }
         }
     };
