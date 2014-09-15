@@ -24,7 +24,8 @@
                 energy_btn_id: '#DailyConsumtionTrigger',
                 energy_btn_recover: '.warn_on',
                 fight_home: '.blue_beauty',
-                home_link: '#menu1 a'
+                home_link: '#menu1 a',
+                battle_link: '.blue_beauty'
 
 
 
@@ -32,7 +33,7 @@
                 //eat_food_wide energy - use energy bar
             },
             classes: {
-                energy_class: 'warn_on'
+                energy_class: 'reset'
             }
         };
         var _selectors = _that.settings.selectors,
@@ -45,23 +46,33 @@
 
         this.main = {
             start: function () {
-
+                setInterval(function () {
+                    //_that.main.do_the_job();
+                }, 10000);
+            },
+            do_the_job: function () {
+                if (_that.main.check_health) {
+                    _that.main.go_battle();
+                    _that.main.fight();
+                }
             },
             check_recover_health: function () {
                 var id = $(_selectors.energy_btn_id),
                     rec_class = _classes.energy_class;
-                if(id.hasClass(rec_class)){
+                if (id.hasClass(rec_class)) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
 
             },
             check_health: function () {
                 var cur_health_s = $(_selectors.current_health),
-                    health_str = cur_health_s.text().substr(0, 2),
+                    health_str = cur_health_s.text().substr(0, 3),
                     health = parseInt(health_str);
+                console.log(' health_str, health', health_str, health );
                 if (health < 500) {
+                    console.log('check health false');
                     return false;
                 }
                 else {
@@ -69,17 +80,29 @@
                 }
             },
             recover_health: function () {
-              var h_check =  _that.main.check_recover_health(),
-                  energy_recover = $(_selectors.energy_btn_id);
-                if(h_check== true){
+                var h_check = _that.main.check_recover_health(),
+                    energy_recover = $(_selectors.energy_btn_id);
+                if (h_check) {
                     energy_recover.click();
                 }
             },
             fight: function () {
+                $(_selectors.fight_btn).click();
 
             },
-            go_home: function(){
-                _selectors.home_link.click();
+            go_home: function () {
+                console.log('$(_selectors.home_link', $(_selectors.home_link));
+              $(_selectors.home_link.click());
+            },
+            go_battle: function () {
+                $(_selectors.battle_link).click();
+            },
+            timeout: function (data) {
+               var ran = Math.floor(Math.random() * 6) + 1;
+                console.log('ran',ran );
+                setTimeout(function () {
+
+                }, ran+(111));
             }
         }
     };
